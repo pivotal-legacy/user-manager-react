@@ -1,9 +1,4 @@
-export const get = (url) => {
-  return fetch(url, {
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  }).then((response) => {
-    return response.json()
-  })
+export const get = async url => {
+  const response = await fetch(url)
+  return response.json()
 }
