@@ -1,8 +1,7 @@
 export const get = (url) => {
   return fetch(url, {
     headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
+      'Content-Type': 'application/json'
     }
   }).then((response) => {
     return response.json()
