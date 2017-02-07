@@ -1,24 +1,60 @@
 import React from 'react'
 import expect from 'expect'
-import { shallow } from 'enzyme'
+import { shallow, mount } from 'enzyme'
 
 import UsersContainer from '../../app/components/UsersContainer'
+import Users from '../../app/components/Users'
 import * as fetcher from '../../app/helpers/fetcher'
 
-describe('UserList', () => {
-  it('getUsers requests calls get with correct url', () => {
-    const getSpy = expect.spyOn(fetcher, 'get')
+afterEach(() => expect.restoreSpies())
 
-    UsersContainer.prototype.getUsers()
+describe('UsersContainer', () => {
+  const users = [{'username': 'bob', 'password': 'obo'}]
 
-    expect(getSpy).toHaveBeenCalledWith('http://localhost:8080/users')
-  });
+  describe('#getUsers', () => {
+    let results, getSpy;
+    beforeEach(() => {
+      getSpy = expect.spyOn(fetcher, 'get').andReturn(users)
 
-  it('calls getUsers when component is mounted', () => {
-    const fetchSpy = expect.spyOn(UsersContainer.prototype, 'getUsers')
+      results = UsersContainer.prototype.getUsers()
+    })
 
-    shallow(<UsersContainer/>)
+    it('calls get with the correct url', () => {
+      expect(getSpy).toHaveBeenCalledWith('http://localhost:8080/users')
+    })
 
-    expect(fetchSpy).toHaveBeenCalled()
+    it('returns the results from get', () => {
+      expect(results).toEqual(users)
+    })
+  })
+
+  describe('when component is mounted', () => {
+    let usersPromise, getUsersSpy, usersContainer;
+    beforeEach(() => {
+      usersPromise = { then: cb => cb(users) }
+      getUsersSpy = expect.spyOn(UsersContainer.prototype, 'getUsers').andReturn(usersPromise)
+
+      usersContainer = mount(<UsersContainer/>)
+    })
+
+    it('calls #getUsers', () => {
+      expect(getUsersSpy).toHaveBeenCalled()
+    })
+
+    it('sets users on state', () => {
+      expect(usersContainer.state('users')).toEqual(users)
+    })
+
+    it('renders users', () => {
+      const usersPresenter = usersContainer.find(Users)
+      expect(usersPresenter.length).toBe(1)
+    })
+  })
+
+  it('if users are not on state, does not render', () => {
+    const usersContainer = shallow(<UsersContainer/>)
+
+    const usersPresenter = usersContainer.find(Users)
+    expect(usersPresenter.length).toBe(0)
   })
 })

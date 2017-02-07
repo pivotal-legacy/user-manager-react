@@ -6,18 +6,18 @@ import Users from './Users'
 export default class UsersContainer extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {users: []}
+    this.state = { users: null }
   }
 
-  componentWillMount() {
-    this.getUsers()    
+  componentDidMount() {
+    this.getUsers().then(users => this.setState({users}))
   }
 
   getUsers() {
-    get('http://localhost:8080/users')
+    return get('http://localhost:8080/users')
   }
 
   render() {
-    return <Users {...{users: this.state.users}}/>
+    return this.state.users && <Users {...{users: this.state.users}}/>
   }
 }
