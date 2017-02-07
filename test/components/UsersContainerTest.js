@@ -11,7 +11,7 @@ describe('UserList', () => {
 
     UsersContainer.prototype.getUsers()
 
-    expect(getSpy).toHaveBeenCalledWith('localhost:8080/users')
+    expect(getSpy).toHaveBeenCalledWith('http://localhost:8080/users')
   });
 
   it('calls getUsers when component is mounted', () => {
