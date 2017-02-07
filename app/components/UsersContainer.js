@@ -9,8 +9,8 @@ export default class UsersContainer extends React.Component {
     this.state = { users: null }
   }
 
-  componentDidMount() {
-    this.getUsers().then(users => this.setState({users}))
+  async componentDidMount() {
+    this.setState({users: await this.getUsers()})
   }
 
   getUsers() {

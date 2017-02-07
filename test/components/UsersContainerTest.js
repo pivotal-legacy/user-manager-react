@@ -30,8 +30,8 @@ describe('UsersContainer', () => {
 
   describe('when component is mounted', () => {
     let usersPromise, getUsersSpy, usersContainer;
-    beforeEach(() => {
-      usersPromise = { then: cb => cb(users) }
+    beforeEach(async () => {
+      usersPromise = new Promise(resolve => resolve(users))
       getUsersSpy = expect.spyOn(UsersContainer.prototype, 'getUsers').andReturn(usersPromise)
 
       usersContainer = mount(<UsersContainer/>)
