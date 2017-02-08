@@ -2,9 +2,9 @@ import React from 'react'
 import expect from 'expect'
 import { shallow, mount } from 'enzyme'
 
-import UsersContainer from '../../app/components/UsersContainer'
-import Users from '../../app/components/Users'
-import * as fetcher from '../../app/helpers/fetcher'
+import UsersContainer from '../../../app/components/UsersContainer'
+import Users from '../../../app/components/Users'
+import * as fetcher from '../../../app/helpers/fetcher'
 import asyncPromise from '../helpers/asyncPromise'
 
 afterEach(() => expect.restoreSpies())
