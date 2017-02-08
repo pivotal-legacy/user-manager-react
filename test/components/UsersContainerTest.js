@@ -5,6 +5,7 @@ import { shallow, mount } from 'enzyme'
 import UsersContainer from '../../app/components/UsersContainer'
 import Users from '../../app/components/Users'
 import * as fetcher from '../../app/helpers/fetcher'
+import asyncPromise from '../helpers/asyncPromise'
 
 afterEach(() => expect.restoreSpies())
 
@@ -31,10 +32,11 @@ describe('UsersContainer', () => {
   describe('when component is mounted', () => {
     let usersPromise, getUsersSpy, usersContainer;
     beforeEach(async () => {
-      usersPromise = new Promise(resolve => resolve(users))
+      usersPromise = asyncPromise(users)
       getUsersSpy = expect.spyOn(UsersContainer.prototype, 'getUsers').andReturn(usersPromise)
 
       usersContainer = mount(<UsersContainer/>)
+      await usersPromise
     })
 
     it('calls #getUsers', () => {
