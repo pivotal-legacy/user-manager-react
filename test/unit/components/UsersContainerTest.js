@@ -7,6 +7,7 @@ import Users from '../../../app/components/Users'
 import * as fetcher from '../../../app/helpers/fetcher'
 import { asyncPromise } from '../helpers/asyncHelpers'
 
+//TODO: Make this afterEach apply to all tests
 afterEach(() => expect.restoreSpies())
 
 describe('UsersContainer', () => {

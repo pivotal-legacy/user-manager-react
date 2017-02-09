@@ -6,12 +6,17 @@ import Server from "../../integration/helpers/Server"
 import { toEventuallyThrow } from '../helpers/asyncHelpers'
 
 describe('Server', () => {
-  it('shells out to run the make script to start the front end for integration tests', () => {
+  it('shells out to run the make script to start the front end for integration tests', async () => {
     const subject = new Server()
     const mySpawn = mockSpawn()
     child_process.spawn = mySpawn
 
-    subject.start()
+    // Await promise settling to suppress unhandled promise rejection warning;
+    // Catch error because this test isn't set up enough so that the server would actually start
+    try {
+      await subject.start()
+    } catch(e) {
+    }
 
     expect(mySpawn.calls[0].command).toBe('make start-integration')
   })
