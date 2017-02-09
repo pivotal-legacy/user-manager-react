@@ -2,7 +2,7 @@ import {spawn} from 'child_process'
 
 export default class Server {
   start = async () => {
-    this.process = spawn('make start-integration')
+    this.process = spawn('make', ['start-integration'])
 
     return await new Promise((resolve, reject) => {
       this.process.stdout.on('data', data => {

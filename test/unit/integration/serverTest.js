@@ -18,7 +18,9 @@ describe('Server', () => {
     } catch(e) {
     }
 
-    expect(mySpawn.calls[0].command).toBe('make start-integration')
+    const firstCall = mySpawn.calls[0]
+    expect(firstCall.command).toBe('make')
+    expect(firstCall.args).toEqual(['start-integration'])
   })
 
   it('start resolves when the front end is ready', async () => {
