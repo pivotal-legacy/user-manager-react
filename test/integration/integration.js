@@ -1,19 +1,23 @@
 import expect from 'expect'
+import * as webdriverio from 'webdriverio'
 
 import Server from './helpers/Server'
 
 describe('integration tests', () => {
-  let server
+  let server, browser
   beforeEach(async () => {
     server = new Server()
     await server.start()
+
+    browser = webdriverio.remote().init().url('http://localhost:8081')
   })
 
   afterEach(async () => {
     await server.stop()
   })
 
-  it('runs an integration test', () => {
-    expect(true).toBe(true)
+  it('has the correct header', async () => {
+    const header = await browser.getText('h1')
+    expect(header).toBe('User Manager')
   })
 })
