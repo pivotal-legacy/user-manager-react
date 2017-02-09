@@ -6,7 +6,7 @@ import Server from "../../integration/helpers/Server"
 import { toEventuallyThrow } from '../helpers/asyncHelpers'
 
 describe('Server', () => {
-  it('shells out to run the make script to start the front end for integration tests', async () => {
+  it('shells out to run the make script to start the front end server for integration tests', async () => {
     const subject = new Server()
     const mySpawn = mockSpawn()
     child_process.spawn = mySpawn
@@ -28,9 +28,9 @@ describe('Server', () => {
     const mySpawn = mockSpawn()
     child_process.spawn = mySpawn
     mySpawn.setStrategy(() => function() {
-        this.stdout.write('stuff happening but not ready');
-        this.stdout.write('stuff happening but not ready');
-        this.stdout.write('webpack: Compiled successfully.');
+      this.stdout.write('stuff happening but not ready');
+      this.stdout.write('stuff happening but not ready');
+      this.stdout.write('webpack: Compiled successfully.');
     })
 
     const startupResult = await subject.start()
@@ -43,12 +43,24 @@ describe('Server', () => {
     const mySpawn = mockSpawn()
     child_process.spawn = mySpawn
     mySpawn.setStrategy(() => function() {
-        this.stdout.write('stuff happening but not ready');
-        this.stdout.write('stuff happening but not ready');
+      this.stdout.write('stuff happening but not ready');
+      this.stdout.write('stuff happening but not ready');
     })
 
     const didThrowError = await toEventuallyThrow(subject.start, 'Server failed to start.')
 
     expect(didThrowError).toBe(true)
+  })
+
+  it('shells out to stop the front end server that was started for integration tests', async () => {
+    const subject = new Server()
+    const mySpawn = mockSpawn()
+    child_process.spawn = mySpawn
+
+    await subject.stop()
+
+    const firstCall = mySpawn.calls[0]
+    expect(firstCall.command).toBe('make')
+    expect(firstCall.args).toEqual(['stop-integration'])
   })
 })
