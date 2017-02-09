@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "unit": "NODE_SERVER_STARTUP_TIMEOUT=0 mocha test/unit --compilers js:babel-core/register,test/unit/helpers/setupBrowserEnv.js --require babel-polyfill",
-    "integration": "selenium-standalone start > /dev/null 2>&1 & NODE_SERVER_STARTUP_TIMEOUT=5000 mocha test/integration --compilers js:babel-core/register --require babel-polyfill",
+    "integration": "selenium-standalone start > /dev/null 2>&1 & mocha test/integration --compilers js:babel-core/register --require babel-polyfill",
     "test": "npm run unit; npm run integration",
     "start": "webpack-dev-server --content-base build/ --port 8000",
     "postinstall": "selenium-standalone install"
