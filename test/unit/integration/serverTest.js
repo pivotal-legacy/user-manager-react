@@ -39,12 +39,12 @@ describe('Server', () => {
     expect(killSpy).toHaveBeenCalled()
   })
 
-  const failureOutput = () => {
+  const failureOutput = function() {
     this.stdout.write('stuff happening but not ready')
     this.stdout.write('stuff happening but not ready')
   }
 
-  const successOutput = () => {
+  const successOutput = function() {
     this.stdout.write('stuff happening but not ready')
     this.stdout.write('stuff happening but not ready')
     this.stdout.write('webpack: Compiled successfully.')
