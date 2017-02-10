@@ -25,9 +25,7 @@ describe('Server', () => {
   })
 
   it('times out if the server does not start within the expected time frame', async () => {
-    await startServer(failureOutput)
-
-    const didThrowError = await toEventuallyThrow(subject.start, 'Server failed to start.')
+    const didThrowError = await toEventuallyThrow(() => startServer(failureOutput), 'Server failed to start.')
 
     expect(didThrowError).toBe(true)
   })
