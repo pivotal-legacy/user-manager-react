@@ -34,7 +34,7 @@ describe('Server', () => {
     await startServer(successOutput)
     const killSpy = expect.spyOn(subject.process, 'kill')
 
-    await subject.stop()
+    subject.stop()
 
     expect(killSpy).toHaveBeenCalled()
   })

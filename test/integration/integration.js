@@ -13,7 +13,7 @@ describe('integration tests', () => {
   })
 
   afterEach(async () => {
-    await server.stop()
+    server.stop()
     await browser.end()
   })
 

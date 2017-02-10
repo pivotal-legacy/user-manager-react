@@ -16,7 +16,7 @@ export default class Server {
     })
   }
 
-  stop = async () => {
-    await this.process.kill()
+  stop = () => {
+    this.process.kill()
   }
 }
