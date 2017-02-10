@@ -14,6 +14,7 @@ describe('integration tests', () => {
 
   afterEach(async () => {
     await server.stop()
+    await browser.end()
   })
 
   it('has the correct header', async () => {

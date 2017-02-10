@@ -2,10 +2,10 @@ import {spawn} from 'child_process'
 
 export default class Server {
   start = async () => {
-    const spawnedProcess = spawn('make', ['start-integration'])
+    this.process = spawn('npm', ['start', '--', '--port=8081'])
 
     return await new Promise((resolve, reject) => {
-      spawnedProcess.stdout.on('data', data => {
+      this.process.stdout.on('data', data => {
         if (data.includes('webpack: Compiled successfully.')) {
           resolve('Server ready!')
         }
@@ -17,6 +17,6 @@ export default class Server {
   }
 
   stop = async () => {
-    await spawn('make', ['stop-integration'])
+    await this.process.kill()
   }
 }
